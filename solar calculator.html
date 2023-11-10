@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+  }
+
+  #calculator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+  }
+
+  input, button {
+    margin-top: 10px;
+    padding: 12px;
+    border: 2px solid #efc9af;
+    border-radius: 5px;
+
+
+  }
+  ::placeholder{
+    color: black;
+  }
+
+  p {
+    margin-top: 20px;
+  }
+
+  #calculator h2 {
+    color: #4CAF50; /* green */
+    text-align: center;
+  }
+
+  #calculator button {
+    background-color: #4CAF50; /* green */
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer; /* add cursor pointer */
+  }
+
+  #calculator button:hover {
+    background-color: #45a049; /* dark green */
+  }
+</style>
+</head>
+<body>
+
+<div id="calculator">
+  <h2>Solar Energy Calculator</h2>
+
+  <p>Enter your energy consumption bill in ₹:</p>
+  <input id="bill" type="number" placeholder="Enter the amount">
+
+  <p>Cost of Solar Panel (₹):</p>
+  <input id="solarCost" type="number" placeholder="Enter the cost">
+  <p>Estimated Savings Percentage (%):</p>
+  <input id="savingsPercentage" type="number" placeholder="Amount of % saving ">
+
+  <button onclick="calculate()">Calculate Savings</button>
+  <button onclick="clearFields()">Clear</button>
+
+  <p id="result"></p>
+</div>
+
+<script>
+function calculate() {
+  var bill = parseFloat(document.getElementById("bill").value);
+  var solarCost = parseFloat(document.getElementById("solarCost").value);
+  var savingsPercentage = parseFloat(document.getElementById("savingsPercentage").value);
+
+  if (isNaN(bill) || bill <= 0) {
+    document.getElementById("result").innerHTML = "Please enter a valid positive bill amount.";
+    return;
+  }
+
+  if (bill < 800) {
+    document.getElementById("result").innerHTML = "Your energy consumption bill is less than ₹800. There is no need to install a solar panel.";
+    return;
+  }
+
+  if (isNaN(solarCost) || solarCost <= 0 || isNaN(savingsPercentage) || savingsPercentage <= 0) {
+    document.getElementById("result").innerHTML = "Please enter valid values for solar cost and savings percentage.";
+    return;
+  }
+
+  // Update the calculation based on custom solar cost and savings percentage
+  var savings = bill * (savingsPercentage / 100);
+  var paybackPeriod = solarCost / savings;
+
+  document.getElementById("result").innerHTML = "Based on your energy consumption bill of ₹" + bill + ", it is recommended that you install a solar panel. By doing so, you can save approximately ₹" + savings.toFixed(2) + " per month. The payback period for the solar panel installation is approximately " + paybackPeriod.toFixed(2) + " months.";
+}
+
+function clearFields() {
+  document.getElementById("bill").value = "";
+  document.getElementById("solarCost").value = "";
+  document.getElementById("savingsPercentage").value = "";
+  document.getElementById("result").innerHTML = "";
+}
+</script>
+
+</body>
+</html>

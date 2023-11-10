@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>solar Energy website</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f4f4;
+        }
+        .header {
+            padding: 15px;
+            background-color: #007BFF;
+            position: relative;
+        }
+        .header h1 {
+            color: #fff;
+        }
+        .home-link {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 10px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            align-items: center;
+        }
+        .home-link i {
+            margin-right: 5px;
+        }
+        .home-link i a{
+            text-decoration: none;
+            color: white;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .quiz-body {
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .option-block {
+            background-color: #f7f7f7;
+            border: 1px solid #d1d1d1;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .option-block:hover {
+            background-color: #e3e3e3;
+        }
+        .button-group {
+            margin-top: 20px;
+        }
+        .result {
+            text-align: center;
+        }
+        .result-question {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .correct {
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+        .res-header {
+            font-size: 24px;
+        }
+        #retry {
+            display: none;
+        }
+        .home-link a{
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="home-link"><i class="fas fa-home"></i> Back to Home</a>
+            <h1>Solar Energy Quiz</h1>
+        </div>
+    </header>
+    <div class="container">
+        <div id="result" class="quiz-body">
+            <form name="quizForm">
+                <fieldset class="form-group">
+                    <h4><span id="qid">1.</span> <span id="question"></span></h4>
+                    <div class="option-block-container" id="question-options">
+                    </div>
+                </fieldset>
+                <div class="button-group">
+                    <button name="previous" id="previous" class="btn btn-primary">Previous</button>
+                    <button name="next" id="next" class="btn btn-primary">Next</button>
+                    <button name="submit" id="submit" class="btn btn-success" style="display: none;">Submit</button>
+                    <button name="retry" id="retry" class="btn btn-info" style="display: none;">Retry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Your JavaScript code here
+        var quiz = {
+            "SolarEnergy": [
+                {
+                    "id": 1,
+                    "question": "Which is the non-mechanical device that converts sunlight directly into electricity?",
+                    "options": [
+                        "a) Thermometer",
+                        "b) Voltameter",
+                        "c) Photovoltaic cell",
+                        "d) Barometer"
+                    ],
+                    "answer": "c) Photovoltaic cell",
+                    "score": 0,
+                    "status": ""
+                },
+                {
+                    "id": 2,
+                    "question": "What are solar panels?",
+                    "options": [
+                        "a) Solar Energy",
+                        "b) A solar cell",
+                        "c) A pack of solar cells",
+                        "d) The sun"
+                    ],
+                    "answer": "b) A solar cell",
+                    "score": 0,
+                    "status": ""
+                },
+                {
+                    "id": 3,
+                    "question": "What is the process of converting sunlight into electricity using semiconductors?",
+                    "options": [
+                        "a) Photocopying",
+                        "b) Solarization",
+                        "c) Photovoltaic effect",
+                        "d) Light amplification"
+                    ],
+                    "answer": "c) Photovoltaic effect",
+                    "score": 0,
+                    "status": ""
+                },
+                {
+                    "id": 4,
+                    "question": "Which gas is produced when solar panels generate electricity?",
+                    "options": [
+                        "a) Oxygen",
+                        "b) Hydrogen",
+                        "c) Carbon dioxide",
+                        "d) Nitrogen"
+                    ],
+                    "answer": "b) Hydrogen",
+                    "score": 0,
+                    "status": ""
+                },
+                {
+                    "id":5,
+                    "question": "Which among the following is the cleanest form of energy_____",
+                    "options": [
+                        "a) Nuclear power",
+                        "b) Natural gas",
+                        "c) Fossil fuels",
+                        "d) Solar energy"     
+                    ],
+                    "answer": "d) Solar energy",
+                    "score": 0,
+                    "status": ""
+
+                },
+                {
+                    "id":6,
+                    "question": "Which type of solar cell gives the highest efficiency?",
+                    "options": [
+                        "a) Mono crystalline",
+                        "b) Polycrystalline     germanium",
+                        "C) Thin film",
+                        "D) Polycrystalline silicon"     
+                    ],
+                    "answer": "a) Mono crystalline",
+                    "score": 0,
+                    "status": ""
+                },
+                {
+                    "id": 7,
+                    "question": " Which of the following is a commonly used material in solar cells?",
+                    "options": [
+                    "a.Alunimium",
+                    "b. Germanium",
+                    "c. Silicon",
+                    "d. Copper"
+
+                    ],
+                    "answer": "c) Silicon",
+                    "score": 0,
+                    "status": ""
+                },
+                {
+                    "id": 8,
+                    "question": " In which city in Rajasthan are two 1800 MW solar parks being built?",
+                    "options": [
+                    "a. Jodhpur and barmer",
+                     "b. Jaiselmer and Bikaner",
+                     "c. Jaipur and Bikaner",
+                     "d.Jaiselmer and Barmer"
+
+                    ],
+                    "answer": "b)Jaiselmer and Bikaner",
+                    "score": 0,
+                    "status": ""
+                },
+                {
+                    "id": 9,
+                    "question": "  Which solar park is the largest in the world as of 2022?",
+                    "options": [
+                    "a. Harsad Solar Park",
+                    "b. Lohit Solar Park",
+                    "c. Pavagada Solar Park",
+                    "d. Bhadla Solar Park"
+
+
+                    ],
+                    "answer": "d) Bhadla Solar Park",
+                    "score": 0,
+                    "status": ""
+                },
+                {
+                    "id": 10,
+                    "question": " An instrument used for measuring total solar radiation is called",
+                    "options": [
+                    "a. hygrometer",
+                    "b.Pyranometer",
+                    "c. anemometer",
+                    "d. pyrheliometer"
+
+
+                    ],
+                    "answer": "b) Pyranometer",
+                    "score": 0,
+                    "status": ""
+                },
+                
+
+            
+                // Add more questions here...
+            ]
+        };
+
+        var quizApp = function () {
+            this.score = 0;
+            this.currentque = 0;
+            var totalque = quiz.SolarEnergy.length;
+
+            this.displayQuiz = function (cque) {
+                var currentQuestion = quiz.SolarEnergy[cque];
+                $("#qid").text(currentQuestion.id + '.');
+                $("#question").text(currentQuestion.question);
+                $("#question-options").html(""); // Clear previous options
+                currentQuestion.options.forEach(function (option) {
+                    $("#question-options").append(
+                        "<div class='form-check option-block'>" +
+                        "<label class='form-check-label'>" +
+                        "<input type='radio' class='form-check-input' name='option' value='" + option + "'>" +
+                        "<span id='optionval'>" + option + "</span></label>"
+                    );
+                });
+                if (cque === 0) {
+                    $('#previous').attr('disabled', true);
+                } else {
+                    $('#previous').attr('disabled', false);
+                }
+                if (cque === totalque - 1) {
+                    $('#next').hide();
+                    $('#submit').show();
+                } else {
+                    $('#next').show();
+                    $('#submit').hide();
+                }
+            }
+
+            this.checkAnswer = function (option) {
+                var currentQuestion = quiz.SolarEnergy[this.currentque];
+                if (option === currentQuestion.answer) {
+                    currentQuestion.score = 1;
+                    currentQuestion.status = "correct";
+                } else {
+                    currentQuestion.score = 0;
+                    currentQuestion.status = "wrong";
+                }
+            }
+
+            this.changeQuestion = function (cque) {
+                this.currentque += cque;
+                this.displayQuiz(this.currentque);
+            }
+
+            this.showResult = function () {
+                var score = 0;
+                for (var i = 0; i < totalque; i++) {
+                    score += quiz.SolarEnergy[i].score;
+                }
+                $("#result").html("<h1 class='res-header'>Total Score: &nbsp;" + score + '/' + totalque + "</h1>");
+                for (var j = 0; j < totalque; j++) {
+                    var status = quiz.SolarEnergy[j].score === 1 ? "correct" : "wrong";
+                    $("#result").append(
+                        '<div class="result-question"><span>Q ' + quiz.SolarEnergy[j].id + '</span> &nbsp;' + quiz.SolarEnergy[j].question + '</div>' +
+                        '<div><b>Correct answer:</b> &nbsp;' + quiz.SolarEnergy[j].answer + '</div>' +
+                        '<div class="last-row"><b>Score:</b> &nbsp;<span class="' + status + '">' + quiz.SolarEnergy[j].score + '</span><i class="fas fa-check ' + status + '"></i></div>'
+                    );
+                }
+                $("#result").addClass('result');
+                $('#previous, #next, #submit').hide();
+                $('#retry').show();
+            }
+        }
+
+        var jsq = new quizApp();
+
+        function startQuiz() {
+            jsq.score = 0;
+            jsq.currentque = 0;
+            jsq.displayQuiz(0);
+            $('#previous, #next, #submit').show();
+            $('#result').removeClass('result');
+            $('#retry').hide();
+        }
+
+        $(document).ready(function () {
+            startQuiz();
+
+            $('#question-options').on('change', 'input[type=radio][name=option]', function (e) {
+                selectedopt = $("input[name='option']:checked").val();
+            });
+
+            $('#previous').click(function (e) {
+                e.preventDefault();
+                if (selectedopt !== undefined) {
+                    jsq.checkAnswer(selectedopt);
+                    selectedopt = undefined;
+                    jsq.changeQuestion(-1);
+                } else {
+                    // Handle the case where no option is selected (e.g., show a message)
+                }
+            });
+
+            $('#next').click(function (e) {
+                e.preventDefault();
+                if (selectedopt !== undefined) {
+                    jsq.checkAnswer(selectedopt);
+                    selectedopt = undefined;
+                    jsq.changeQuestion(1);
+                } else {
+                    // Handle the case where no option is selected (e.g., show a message)
+                }
+            });
+
+            $('#submit').click(function (e) {
+                e.preventDefault();
+                if (selectedopt !== undefined) {
+                    jsq.checkAnswer(selectedopt);
+                    jsq.showResult();
+                } else {
+                    // Handle the case where no option is selected (e.g., show a message)
+                }
+            });
+
+            $('#retry').click(function (e) {
+                e.preventDefault();
+                startQuiz();
+            });
+        });
+    </script>
+</body>
+</html>
